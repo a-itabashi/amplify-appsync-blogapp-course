@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import { ConfigureAmplifyClientSide } from "@/components/ConfigureAmplifyClientSide";
+import { Navbar } from "@/components/layout/Navbar";
 // import "../../configureAmplify";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -19,7 +20,12 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <ConfigureAmplifyClientSide />
-      <body className={inter.className}>{children}</body>
+      <body className={inter.className}>
+        <>
+          <Navbar />
+          <div className="py-8 px-16 bg-slate-100">{children}</div>
+        </>
+      </body>
     </html>
   );
 }
