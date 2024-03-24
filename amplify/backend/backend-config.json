@@ -1,10 +1,25 @@
 {
   "api": {
     "amplifyappsyncblog": {
-      "dependsOn": [],
+      "dependsOn": [
+        {
+          "attributes": [
+            "UserPoolId"
+          ],
+          "category": "auth",
+          "resourceName": "amplifyappsyncblog8c8e59c8"
+        }
+      ],
       "output": {
         "authConfig": {
-          "additionalAuthenticationProviders": [],
+          "additionalAuthenticationProviders": [
+            {
+              "authenticationType": "AMAZON_COGNITO_USER_POOLS",
+              "userPoolConfig": {
+                "userPoolId": "authamplifyappsyncblog8c8e59c8"
+              }
+            }
+          ],
           "defaultAuthentication": {
             "apiKeyConfig": {
               "apiKeyExpirationDays": 7
