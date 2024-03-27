@@ -8,8 +8,11 @@ type GeneratedSubscription<InputType, OutputType> = string & {
   __generatedSubscriptionOutput: OutputType;
 };
 
-export const onCreatePost = /* GraphQL */ `subscription OnCreatePost($filter: ModelSubscriptionPostFilterInput) {
-  onCreatePost(filter: $filter) {
+export const onCreatePost = /* GraphQL */ `subscription OnCreatePost(
+  $filter: ModelSubscriptionPostFilterInput
+  $username: String
+) {
+  onCreatePost(filter: $filter, username: $username) {
     id
     title
     content
@@ -24,8 +27,11 @@ export const onCreatePost = /* GraphQL */ `subscription OnCreatePost($filter: Mo
   APITypes.OnCreatePostSubscriptionVariables,
   APITypes.OnCreatePostSubscription
 >;
-export const onUpdatePost = /* GraphQL */ `subscription OnUpdatePost($filter: ModelSubscriptionPostFilterInput) {
-  onUpdatePost(filter: $filter) {
+export const onUpdatePost = /* GraphQL */ `subscription OnUpdatePost(
+  $filter: ModelSubscriptionPostFilterInput
+  $username: String
+) {
+  onUpdatePost(filter: $filter, username: $username) {
     id
     title
     content
@@ -40,8 +46,11 @@ export const onUpdatePost = /* GraphQL */ `subscription OnUpdatePost($filter: Mo
   APITypes.OnUpdatePostSubscriptionVariables,
   APITypes.OnUpdatePostSubscription
 >;
-export const onDeletePost = /* GraphQL */ `subscription OnDeletePost($filter: ModelSubscriptionPostFilterInput) {
-  onDeletePost(filter: $filter) {
+export const onDeletePost = /* GraphQL */ `subscription OnDeletePost(
+  $filter: ModelSubscriptionPostFilterInput
+  $username: String
+) {
+  onDeletePost(filter: $filter, username: $username) {
     id
     title
     content

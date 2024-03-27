@@ -18,11 +18,16 @@
               "userPoolConfig": {
                 "userPoolId": "authamplifyappsyncblog8c8e59c8"
               }
+            },
+            {
+              "authenticationType": "AWS_IAM"
             }
           ],
           "defaultAuthentication": {
             "apiKeyConfig": {
-              "apiKeyExpirationDays": 7
+              "apiKeyExpirationDate": "2025-03-26T05:50:17.851Z",
+              "apiKeyExpirationDays": 365,
+              "description": "public api key"
             },
             "authenticationType": "API_KEY"
           }

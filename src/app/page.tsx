@@ -10,8 +10,8 @@ export default function Home() {
   const client = generateClient();
   const [posts, setPosts] = useState<Post[]>([]);
 
-  // useCallbackフックを使用して関数をメモ化することができます。
-  // これにより、fetchPostsが依存している値が変更されない限り、同じ関数の参照が保持され続けます。
+  // // useCallbackフックを使用して関数をメモ化することができます。
+  // // これにより、fetchPostsが依存している値が変更されない限り、同じ関数の参照が保持され続けます。
   const fetchPosts = useCallback(async () => {
     const postData = await client.graphql({
       query: listPosts,
@@ -22,6 +22,17 @@ export default function Home() {
   useEffect(() => {
     fetchPosts();
   }, [fetchPosts]);
+
+  // const fetchPosts = async () => {
+  //   const postData = await client.graphql({
+  //     query: listPosts,
+  //   });
+  //   setPosts(postData.data.listPosts.items);
+  // };
+
+  // useEffect(() => {
+  //   fetchPosts();
+  // }, []);
 
   return (
     <div>
