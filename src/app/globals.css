@@ -7,3 +7,7 @@
   --amplify-primary-tint: #498a49;
   --amplify-primary-shade: #c9794b;
 }
+
+.amplify-tabs > .amplify-tabs__list {
+  display: none;
+}

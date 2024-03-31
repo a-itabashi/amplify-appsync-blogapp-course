@@ -8,7 +8,6 @@ import { usePathname } from "next/navigation";
 
 const NAVBAR_LIST = [
   ["Home", "/"],
-  ["Create Post", "/create-post"],
   ["Profile", "/profile"],
 ];
 
@@ -36,12 +35,26 @@ const Navbar = () => {
         </Link>
       ))}
       {isAuthenticated && (
-        <Link
-          href="/my-post"
-          className="rounded-lg px-3 py-2 text-slate-700 font-medium hover:bg-slate-100 hover:text-slate-900"
-        >
-          My post
-        </Link>
+        <>
+          <Link
+            href="/create-post"
+            className={`rounded-lg px-3 py-2 text-slate-700 font-medium hover:bg-slate-100 hover:text-slate-900 ${
+              checkActivePath("/create-posts")
+                ? "font-extrabold bg-gray-50"
+                : ""
+            }`}
+          >
+            Creat Post
+          </Link>
+          <Link
+            href="/posts"
+            className={`rounded-lg px-3 py-2 text-slate-700 font-medium hover:bg-slate-100 hover:text-slate-900 ${
+              checkActivePath("/posts") ? "font-extrabold bg-gray-50" : ""
+            }`}
+          >
+            Post
+          </Link>
+        </>
       )}
     </nav>
   );
