@@ -1,9 +1,10 @@
 // "use client";
-import { generateClient } from "aws-amplify/api";
+// import { generateClient } from "aws-amplify/api";
+import { serverClient } from "@/utils/serverUtils";
 import "@aws-amplify/ui-react/styles.css";
-import { notFound, useRouter } from "next/navigation";
+import { notFound } from "next/navigation";
 import { getPost } from "@/graphql/queries";
-import { withAuthenticator } from "@aws-amplify/ui-react";
+// import { withAuthenticator } from "@aws-amplify/ui-react";
 
 type Props = {
   params: {
@@ -11,12 +12,9 @@ type Props = {
   };
 };
 
-async function Post({ params }: Props) {
-  const client = generateClient();
-  const router = useRouter();
-
+export default async function Post({ params }: Props) {
   const { id } = params;
-  const postData = await client.graphql({
+  const postData = await serverClient.graphql({
     query: getPost,
     variables: { id },
   });
@@ -81,4 +79,4 @@ async function Post({ params }: Props) {
 //   };
 // }
 
-export default withAuthenticator(Post);
+// export default withAuthenticator(Post);
