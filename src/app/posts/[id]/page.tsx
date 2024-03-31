@@ -4,6 +4,7 @@ import { serverClient } from "@/utils/serverUtils";
 import "@aws-amplify/ui-react/styles.css";
 import { notFound } from "next/navigation";
 import { getPost } from "@/graphql/queries";
+import ReactMarkdown from "react-markdown";
 // import { withAuthenticator } from "@aws-amplify/ui-react";
 
 type Props = {
@@ -11,6 +12,8 @@ type Props = {
     id: string;
   };
 };
+
+export const revalidate = 60;
 
 export default async function Post({ params }: Props) {
   const { id } = params;
@@ -28,7 +31,10 @@ export default async function Post({ params }: Props) {
   return (
     <div>
       <h1 className="text-3xl font-semibold tracking-wide">Profile</h1>
-      {post.title}
+      <p className="text-sm font-light my-4">By {post.username}</p>
+      <div className="mt-8">
+        <ReactMarkdown>{post.content}</ReactMarkdown>
+      </div>
     </div>
   );
 }

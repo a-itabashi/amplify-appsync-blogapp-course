@@ -1,9 +1,10 @@
 "use client";
 import Link from "next/link";
-import { useCallback, useEffect, useState } from "react";
-// import { Auth, Hub } from "aws-amplify/";
-import { Hub } from "aws-amplify/utils";
-import { getCurrentUser } from "aws-amplify/auth";
+import { useRecoilValue } from "recoil";
+import { authState } from "@/store/authState";
+import { usePathname } from "next/navigation";
+// import { getAuthenticated } from "@/utils/amplifyServerUtils";
+// import { cookies } from "next/headers";
 
 const NAVBAR_LIST = [
   ["Home", "/"],
@@ -12,44 +13,29 @@ const NAVBAR_LIST = [
 ];
 
 const Navbar = () => {
-  const [signedUser, setSignedUser] = useState(false);
-
-  const authListener = useCallback(async () => {
-    Hub.listen("auth", (data: { payload: { event: string } }) => {
-      switch (data.payload.event) {
-        case "signIn":
-          setSignedUser(true);
-          break;
-        case "sighOut":
-          setSignedUser(false);
-          break;
-      }
-    });
-    try {
-      await getCurrentUser();
-      setSignedUser(true);
-    } catch (error) {
-      setSignedUser(false);
-      console.log(error);
+  const isAuthenticated = useRecoilValue(authState);
+  // const isAuthenticated = await getAuthenticated({ cookies });
+  const pathname = usePathname();
+  const checkActivePath = (path: string) => {
+    if (path === "/" && pathname !== path) {
+      return false;
     }
-  }, []);
-
-  useEffect(() => {
-    authListener();
-  }, [authListener]);
-
+    return pathname.startsWith(path);
+  };
   return (
     <nav className="flex justify-center py-3 space-x-4 border-b bg-cyan-500 border-gray-300">
-      {NAVBAR_LIST.map(([title, url]) => (
+      {NAVBAR_LIST.map(([title, path]) => (
         <Link
-          href={url}
-          key={url}
-          className="rounded-lg px-3 py-2 text-slate-700 font-medium hover:bg-slate-100 hover:text-slate-900"
+          href={path}
+          key={path}
+          className={`rounded-lg px-3 py-2 text-slate-700 font-medium hover:bg-slate-100 hover:text-slate-900 ${
+            checkActivePath(path) ? "font-extrabold bg-gray-50" : ""
+          }`}
         >
           {title}
         </Link>
       ))}
-      {signedUser && (
+      {isAuthenticated && (
         <Link
           href="/my-post"
           className="rounded-lg px-3 py-2 text-slate-700 font-medium hover:bg-slate-100 hover:text-slate-900"

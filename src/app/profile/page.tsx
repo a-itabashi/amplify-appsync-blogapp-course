@@ -6,7 +6,7 @@ import {
   fetchUserAttributes,
   getCurrentUser,
 } from "aws-amplify/auth";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import "@aws-amplify/ui-react/styles.css";
 
 type Props = {
@@ -18,7 +18,7 @@ function Profile({ signOut }: Props) {
   const [userAttributes, setUserAttributes] =
     useState<FetchUserAttributesOutput | null>(null);
 
-  const checkUser = async () => {
+  const checkUser = useCallback(async () => {
     try {
       const user = await getCurrentUser();
       const userAttributes = await fetchUserAttributes();
@@ -27,14 +27,14 @@ function Profile({ signOut }: Props) {
     } catch (error) {
       setAuthUser(null);
       setUserAttributes(null);
-      await signOut();
+      signOut();
       console.log(error);
     }
-  };
+  }, [signOut]);
 
   useEffect(() => {
     checkUser();
-  }, []);
+  }, [checkUser]);
 
   if (!authUser || !userAttributes) {
     return null;
