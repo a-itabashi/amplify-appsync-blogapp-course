@@ -3,9 +3,15 @@
 // https://docs.amplify.aws/gen2/build-a-backend/server-side-rendering/
 import { createServerRunner } from "@aws-amplify/adapter-nextjs";
 import config from "@/amplifyconfiguration.json";
-import { fetchAuthSession } from "aws-amplify/auth/server";
+import { fetchAuthSession, getCurrentUser } from "aws-amplify/auth/server";
+import { generateServerClientUsingReqRes } from "@aws-amplify/adapter-nextjs/api";
+import { cookies } from "next/headers";
 
 export const { runWithAmplifyServerContext } = createServerRunner({
+  config,
+});
+
+export const serverGraphQLClient = generateServerClientUsingReqRes({
   config,
 });
 
@@ -29,3 +35,15 @@ export const getAuthenticated = async (
     },
   });
 };
+
+export async function AuthGetCurrentUserServer() {
+  try {
+    const currentUser = await runWithAmplifyServerContext({
+      nextServerContext: { cookies },
+      operation: (contextSpec) => getCurrentUser(contextSpec),
+    });
+    return currentUser;
+  } catch (error) {
+    console.error(error);
+  }
+}

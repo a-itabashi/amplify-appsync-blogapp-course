@@ -36,7 +36,7 @@ export default async function Home() {
   }
 
   return (
-    <div>
+    <>
       <h1 className="text-xl font-semibold">My Post</h1>
       {posts.map((post) => (
         <Link key={post.id} href={`/posts/${post.id}`}>
@@ -46,6 +46,6 @@ export default async function Home() {
           </div>
         </Link>
       ))}
-    </div>
+    </>
   );
 }

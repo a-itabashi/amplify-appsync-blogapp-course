@@ -7,9 +7,9 @@ export async function middleware(request: NextRequest) {
   if (request.nextUrl.pathname === "/") {
     return response;
   }
-  if (request.nextUrl.pathname.startsWith("/posts")) {
-    return response;
-  }
+  //   if (request.nextUrl.pathname.startsWith("/posts")) {
+  //     return response;
+  //   }
 
   const authenticated = await getAuthenticated({
     request,
