@@ -5,6 +5,7 @@ import { ConfigureAmplifyClientSide } from "@/components/ConfigureAmplifyClientS
 import { Navbar } from "@/components/layout/Navbar";
 import RecoilProvider from "@/store/Provider";
 import { AuthListener } from "@/components/AuthListener";
+import { Authenticator } from "@aws-amplify/ui-react";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -21,7 +22,6 @@ export default function RootLayout({
   return (
     <html lang="ja">
       <RecoilProvider>
-        <AuthListener />
         <ConfigureAmplifyClientSide />
         <body className={inter.className}>
           <>
@@ -29,6 +29,7 @@ export default function RootLayout({
             <div className="py-8 px-16 bg-slate-100">{children}</div>
           </>
         </body>
+        <AuthListener />
       </RecoilProvider>
     </html>
   );
