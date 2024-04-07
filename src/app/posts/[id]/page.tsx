@@ -30,7 +30,7 @@ export default async function Post({ params }: Props) {
 
   return (
     <div>
-      <h1 className="text-3xl font-semibold tracking-wide">Profile</h1>
+      <h2>{post.title}</h2>
       <p className="text-sm font-light my-4">By {post.username}</p>
       <div className="mt-8">
         <ReactMarkdown>{post.content}</ReactMarkdown>

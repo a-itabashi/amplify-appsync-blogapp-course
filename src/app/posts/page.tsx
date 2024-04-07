@@ -14,14 +14,9 @@ import {
 } from "@/utils/amplifyServerUtils";
 import Link from "next/link";
 // import { withAuthenticator } from "@aws-amplify/ui-react";
+import { deletePost as deletePostMutation } from "@/graphql/mutations";
 
-type Props = {
-  params: {
-    id: string;
-  };
-};
-
-// export const revalidate = 60;
+export const revalidate = 60;
 
 export default async function Posts() {
   const user = await AuthGetCurrentUserServer();
@@ -40,6 +35,27 @@ export default async function Posts() {
   if (!posts) {
     return notFound();
   }
+
+  // 通常onClickはClient Componentでしか使用できない。
+  // const handleDeletePost = async (id) => {
+  const handleDeletePost = async (data: FormData) => {
+    "use server";
+    // const itemId = data.get("itemId") as string;
+    const id = data.get("postId");
+    if (typeof id !== "string") {
+      return;
+    }
+
+    await serverClient.graphql({
+      query: deletePostMutation,
+      variables: {
+        input: {
+          id,
+        },
+      },
+      authMode: "userPool",
+    });
+  };
 
   return (
     <>
@@ -83,12 +99,23 @@ export default async function Posts() {
                 <Link href={`/posts/${post.id}`}>View Post</Link>
               </p>
 
-              <button
+              {/* <button
                 className="text-sm mr-4 text-red-500"
-                // onClick={() => deletePost(post.id)}
+                onClick={() => deletePost(post.id)}
               >
                 Delete Post
-              </button>
+              </button> */}
+              <form action={handleDeletePost}>
+                <input
+                  name="postId"
+                  className="hidden"
+                  value={post.id}
+                  readOnly
+                />
+                <button className="text-sm mr-4 text-red-500" type="submit">
+                  Delete Post
+                </button>
+              </form>
             </div>
           </div>
         </div>

@@ -44,6 +44,7 @@ function CreatePost() {
       authMode: "userPool",
     });
     router.push(`/posts/${createdPost.data.createPost.id}`);
+    router.refresh();
   };
 
   return (

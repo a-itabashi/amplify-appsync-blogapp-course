@@ -37,7 +37,7 @@ export default async function Home() {
 
   return (
     <>
-      <h1 className="text-xl font-semibold">My Post</h1>
+      <h1 className="text-xl font-semibold">Home Post</h1>
       {posts.map((post) => (
         <Link key={post.id} href={`/posts/${post.id}`}>
           <div className="border-b border-gray-300 mt-8 pb-4">
