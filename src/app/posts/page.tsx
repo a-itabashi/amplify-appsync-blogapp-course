@@ -13,8 +13,9 @@ import {
   serverGraphQLClient,
 } from "@/utils/amplifyServerUtils";
 import Link from "next/link";
+import { DeleteButton } from "@/components/posts/buttons/DeleteButton";
 // import { withAuthenticator } from "@aws-amplify/ui-react";
-import { deletePost as deletePostMutation } from "@/graphql/mutations";
+// import { deletePost as deletePostMutation } from "@/graphql/mutations";
 
 export const revalidate = 60;
 
@@ -38,24 +39,24 @@ export default async function Posts() {
 
   // 通常onClickはClient Componentでしか使用できない。
   // const handleDeletePost = async (id) => {
-  const handleDeletePost = async (data: FormData) => {
-    "use server";
-    // const itemId = data.get("itemId") as string;
-    const id = data.get("postId");
-    if (typeof id !== "string") {
-      return;
-    }
+  // const handleDeletePost = async (data: FormData) => {
+  //   "use server";
+  //   // const itemId = data.get("itemId") as string;
+  //   const id = data.get("postId");
+  //   if (typeof id !== "string") {
+  //     return;
+  //   }
 
-    await serverClient.graphql({
-      query: deletePostMutation,
-      variables: {
-        input: {
-          id,
-        },
-      },
-      authMode: "userPool",
-    });
-  };
+  //   await serverClient.graphql({
+  //     query: deletePostMutation,
+  //     variables: {
+  //       input: {
+  //         id,
+  //       },
+  //     },
+  //     authMode: "userPool",
+  //   });
+  // };
 
   return (
     <>
@@ -98,14 +99,7 @@ export default async function Posts() {
               >
                 <Link href={`/posts/${post.id}`}>View Post</Link>
               </p>
-
-              {/* <button
-                className="text-sm mr-4 text-red-500"
-                onClick={() => deletePost(post.id)}
-              >
-                Delete Post
-              </button> */}
-              <form action={handleDeletePost}>
+              {/* <form action={handleDeletePost}>
                 <input
                   name="postId"
                   className="hidden"
@@ -115,23 +109,12 @@ export default async function Posts() {
                 <button className="text-sm mr-4 text-red-500" type="submit">
                   Delete Post
                 </button>
-              </form>
+              </form> */}
+              <DeleteButton id={post.id} />
             </div>
           </div>
         </div>
       ))}
     </>
-
-    // <>
-    //   <h1 className="text-3xl font-semibold tracking-wide">My Post</h1>
-    //   {posts.map((post) => (
-    //     <Link key={post.id} href={`/posts/${post.id}`}>
-    //       <div className="border-b border-gray-300 mt-8 pb-4">
-    //         <h2>{post.title}</h2>
-    //         <p className="text-gray-500 mt-2">Author: {post.username}</p>
-    //       </div>
-    //     </Link>
-    //   ))}
-    // </>
   );
 }
