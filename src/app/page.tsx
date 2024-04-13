@@ -9,6 +9,7 @@ import { notFound } from "next/navigation";
 import Link from "next/link";
 
 export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export default async function Home() {
   // const client = generateClient();

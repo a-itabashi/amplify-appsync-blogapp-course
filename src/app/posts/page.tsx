@@ -18,6 +18,7 @@ import { DeleteButton } from "@/components/posts/buttons/DeleteButton";
 // import { deletePost as deletePostMutation } from "@/graphql/mutations";
 
 export const revalidate = 60;
+export const dynamic = "force-dynamic";
 
 export default async function Posts() {
   const user = await AuthGetCurrentUserServer();

@@ -6,13 +6,14 @@ import "@aws-amplify/ui-react/styles.css";
 import { useRouter } from "next/navigation";
 // import { v4 as uuid } from "uuid";
 import { createPost } from "@/graphql/mutations";
-import SimpleMDE from "react-simplemde-editor";
+// import SimpleMDE from "react-simplemde-editor";
 // import dynamic from "next/dynamic";
-// const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
-//   ssr: false,
-// });
+const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
+  ssr: false,
+});
 
 import "easymde/dist/easymde.min.css";
+import dynamic from "next/dynamic";
 // import "@aws-amplify/ui-react/styles.css";
 
 function CreatePost() {
