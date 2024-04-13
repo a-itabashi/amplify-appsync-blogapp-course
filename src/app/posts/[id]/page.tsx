@@ -33,7 +33,8 @@ export default async function Post({ params }: Props) {
       <h2>{post.title}</h2>
       <p className="text-sm font-light my-4">By {post.username}</p>
       <div className="mt-8">
-        <ReactMarkdown>{post.content}</ReactMarkdown>
+        {/* <ReactMarkdown>{post.content}</ReactMarkdown> */}
+        <ReactMarkdown className="prose" children={post.content} />
       </div>
     </div>
   );
