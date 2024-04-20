@@ -1,7 +1,7 @@
 "use client";
 import { withAuthenticator, Button } from "@aws-amplify/ui-react";
 import { generateClient } from "aws-amplify/api";
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import "@aws-amplify/ui-react/styles.css";
 import { useRouter, useParams, notFound } from "next/navigation";
 import { updatePost } from "@/graphql/mutations";
@@ -28,11 +28,7 @@ function EditPost() {
   const params: paramsType = useParams();
   const { id } = params;
 
-  if (!id) {
-    return notFound();
-  }
-
-  const fetchPost = async () => {
+  const fetchPost = useCallback(async () => {
     const postData = await client.graphql({
       query: getPost,
       variables: { id },
@@ -40,11 +36,15 @@ function EditPost() {
     });
     const post = postData.data.getPost;
     setPost(post);
-  };
+  }, [client, id]);
 
   useEffect(() => {
     fetchPost();
-  }, []);
+  }, [fetchPost]);
+
+  if (!id) {
+    return notFound();
+  }
 
   const handleOnChange = (event: {
     target: { name: string; value: string };

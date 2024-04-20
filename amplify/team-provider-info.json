@@ -17,6 +17,9 @@
       },
       "auth": {
         "amplifyappsyncblog8c8e59c8": {}
+      },
+      "storage": {
+        "postimages": {}
       }
     }
   }
