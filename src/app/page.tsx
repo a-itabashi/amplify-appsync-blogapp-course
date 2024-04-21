@@ -31,7 +31,7 @@ export default async function Home() {
   const postData = await serverClient.graphql({
     query: listPosts,
   });
-  const posts = postData.data.listPosts.items;
+  const posts: Post[] = postData.data.listPosts.items;
   if (!posts) {
     return notFound();
   }

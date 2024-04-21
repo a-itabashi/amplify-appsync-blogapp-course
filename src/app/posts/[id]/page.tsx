@@ -43,7 +43,7 @@ export default async function Post({ params }: Props) {
     // 参考URL: https://docs.amplify.aws/javascript/build-a-backend/server-side-rendering/nextjs/
     const result = await runWithAmplifyServerContext({
       nextServerContext: { cookies },
-      operation: (contextSpec) =>
+      operation: (contextSpec: any) =>
         getUrl(contextSpec, {
           key: post.coverImage ?? "",
         }),

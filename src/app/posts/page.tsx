@@ -14,6 +14,10 @@ import {
 } from "@/utils/amplifyServerUtils";
 import Link from "next/link";
 import { DeleteButton } from "@/components/posts/buttons/DeleteButton";
+import { Post } from "@/API";
+import { cookies } from "next/headers";
+import { getUrl } from "aws-amplify/storage/server";
+import Image from "next/image";
 // import { withAuthenticator } from "@aws-amplify/ui-react";
 // import { deletePost as deletePostMutation } from "@/graphql/mutations";
 
@@ -27,16 +31,41 @@ export default async function Posts() {
     return notFound();
   }
 
-  const username = `${user.userId}::${user.username}`;
-  const postData = await serverClient.graphql({
-    query: postsByUsername,
-    variables: { username },
-  });
-  const posts = postData.data.postsByUsername.items;
+  const fetchPosts = async () => {
+    const username = `${user.userId}::${user.username}`;
+    const postData = await serverClient.graphql({
+      query: postsByUsername,
+      variables: { username },
+    });
+
+    const { items } = postData.data.postsByUsername;
+
+    const postsWithImages = await Promise.all(
+      items.map(async (post) => {
+        if (post.coverImage) {
+          const result = await runWithAmplifyServerContext({
+            nextServerContext: { cookies },
+            operation: (contextSpec: any) =>
+              getUrl(contextSpec, {
+                key: post.coverImage ?? "",
+              }),
+          });
+          post.coverImage = result.url.toString();
+        }
+        return post;
+      })
+    );
+
+    return postsWithImages;
+  };
+
+  const posts = await fetchPosts();
 
   if (!posts) {
     return notFound();
   }
+
+  // 画像URLを取得する処理
 
   // 通常onClickはClient Componentでしか使用できない。
   // const handleDeletePost = async (id) => {
@@ -68,12 +97,15 @@ export default async function Posts() {
           className="py-8 px-8 max-w-xxl mx-auto bg-white rounded-xl shadow-lg space-y-2 sm:py-1 sm:flex
         sm:items-center sm:space-y-0 sm:space-x-6 mb-2"
         >
-          {/* {post.coverImage && (
-            <img
+          {post.coverImage && (
+            <Image
               className="w-36 h-36 bg-contain bg-center rounded-full sm:mx-0 sm:shrink-0"
               src={post.coverImage}
+              alt={post?.coverImage ?? ""}
+              width={500}
+              height={500}
             />
-          )} */}
+          )}
           <div className="text-center space-y-2 sm:text-left">
             <div className="space-y-0.5">
               <p className="text-lg text-black font-semibold">{post.title}</p>
