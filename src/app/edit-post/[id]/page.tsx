@@ -66,7 +66,7 @@ function EditPost() {
     if (!coverImage) {
       return;
     }
-    console.log("ssre");
+
     updateCoverImage(coverImage);
   }, [id, client]);
 
@@ -114,12 +114,33 @@ function EditPost() {
 
     const { id, content, title } = post;
     const inputVariables = { id, content, title, coverImage };
+    // if (coverImage && localImage) {
+    //   // 既存の画像を削除
+    //   if (post.coverImage) {
+    //     await remove({ key: post.coverImage });
+    //   }
+
+    //   // 新規画像をアップロード
+    //   const fileName = `${localImage.name}_${id}`;
+    //   inputVariables.coverImage = fileName;
+    //   // await Storage.put(fileName, localImage);
+    //   uploadData({ key: fileName, data: localImage });
+    // } else if (!coverImage && localImage) {
+    //   // 新規画像をアップロード
+    //   const fileName = `${localImage.name}_${id}`;
+    //   inputVariables.coverImage = fileName;
+    //   // await Storage.put(fileName, localImage);
+    //   uploadData({ key: fileName, data: localImage });
+    // }
+
     if (coverImage && localImage) {
       // 既存の画像を削除
       if (post.coverImage) {
         await remove({ key: post.coverImage });
       }
+    }
 
+    if (localImage) {
       // 新規画像をアップロード
       const fileName = `${localImage.name}_${id}`;
       inputVariables.coverImage = fileName;
@@ -140,6 +161,7 @@ function EditPost() {
 
   const handleChange = (event: { target: { files: FileList | null } }) => {
     const fileUpload = event.target.files ? event.target.files[0] : null;
+
     if (!fileUpload) return;
     // setCoverImage(fileUpload);
     // setLocalImage(URL.createObjectURL(fileUpload));
@@ -180,7 +202,7 @@ function EditPost() {
         </Button>
       </div>
 
-      {coverImage && (
+      {(localImage || coverImage) && (
         <Image
           src={localImage ? URL.createObjectURL(localImage) : coverImage}
           alt=""

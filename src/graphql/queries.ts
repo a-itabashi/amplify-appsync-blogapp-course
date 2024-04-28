@@ -15,6 +15,10 @@ export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
     content
     username
     coverImage
+    comments {
+      nextToken
+      __typename
+    }
     createdAt
     updatedAt
     __typename
@@ -73,4 +77,83 @@ export const postsByUsername = /* GraphQL */ `query PostsByUsername(
 ` as GeneratedQuery<
   APITypes.PostsByUsernameQueryVariables,
   APITypes.PostsByUsernameQuery
+>;
+export const getComment = /* GraphQL */ `query GetComment($id: ID!) {
+  getComment(id: $id) {
+    id
+    message
+    post {
+      id
+      title
+      content
+      username
+      coverImage
+      createdAt
+      updatedAt
+      __typename
+    }
+    postID
+    createdAt
+    updatedAt
+    createdBy
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.GetCommentQueryVariables,
+  APITypes.GetCommentQuery
+>;
+export const listComments = /* GraphQL */ `query ListComments(
+  $filter: ModelCommentFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  listComments(filter: $filter, limit: $limit, nextToken: $nextToken) {
+    items {
+      id
+      message
+      postID
+      createdAt
+      updatedAt
+      createdBy
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.ListCommentsQueryVariables,
+  APITypes.ListCommentsQuery
+>;
+export const commentsByPostID = /* GraphQL */ `query CommentsByPostID(
+  $postID: ID!
+  $sortDirection: ModelSortDirection
+  $filter: ModelCommentFilterInput
+  $limit: Int
+  $nextToken: String
+) {
+  commentsByPostID(
+    postID: $postID
+    sortDirection: $sortDirection
+    filter: $filter
+    limit: $limit
+    nextToken: $nextToken
+  ) {
+    items {
+      id
+      message
+      postID
+      createdAt
+      updatedAt
+      createdBy
+      __typename
+    }
+    nextToken
+    __typename
+  }
+}
+` as GeneratedQuery<
+  APITypes.CommentsByPostIDQueryVariables,
+  APITypes.CommentsByPostIDQuery
 >;
