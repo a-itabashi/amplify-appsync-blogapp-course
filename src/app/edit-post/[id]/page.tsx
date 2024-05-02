@@ -19,7 +19,7 @@ import "easymde/dist/easymde.min.css";
 import dynamic from "next/dynamic";
 import { getPost } from "@/graphql/queries";
 import { serialize } from "v8";
-import { Post } from "@/API";
+import { GetPostQuery, Post } from "@/API";
 import { getUrl, uploadData } from "aws-amplify/storage";
 import Image from "next/image";
 import { remove } from "aws-amplify/storage";
@@ -146,6 +146,10 @@ function EditPost() {
       inputVariables.coverImage = fileName;
       // await Storage.put(fileName, localImage);
       uploadData({ key: fileName, data: localImage });
+    }
+
+    if (!localImage && coverImage && post.coverImage) {
+      inputVariables.coverImage = post.coverImage;
     }
 
     const updatedPost = await client.graphql({

@@ -7,9 +7,12 @@ export async function middleware(request: NextRequest) {
   if (request.nextUrl.pathname === "/") {
     return response;
   }
-  //   if (request.nextUrl.pathname.startsWith("/posts")) {
-  //     return response;
-  //   }
+  if (request.nextUrl.pathname.startsWith("/posts/:id*")) {
+    return response;
+  }
+  if (request.nextUrl.pathname.startsWith("/profile")) {
+    return response;
+  }
 
   const authenticated = await getAuthenticated({
     request,
@@ -35,6 +38,6 @@ export const config = {
      */
     // "/((?!api|_next/static|_next/image|favicon.ico|sign-in).*)",
     // "/((?!api|_next/static|_next/image|favicon.ico|profile).*)",
-    "/((?!api|_next/static|_next/image|favicon.ico|profile).*)",
+    "/((?!api|_next/static|_next/image|favicon.ico).*)",
   ],
 };

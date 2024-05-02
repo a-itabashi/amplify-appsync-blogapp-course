@@ -35,7 +35,7 @@ export default function Profile() {
   const [userAttributes, setUserAttributes] =
     useState<FetchUserAttributesOutput | null>(null);
   const setAuth = useSetRecoilState(authState);
-  // const router = useRouter();
+  const router = useRouter();
 
   const checkUser = useCallback(async () => {
     try {
@@ -64,6 +64,7 @@ export default function Profile() {
         password,
       }).then((response) => {
         setAuth(true);
+        router.push("/");
         return response;
       });
     },

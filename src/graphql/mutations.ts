@@ -19,6 +19,25 @@ export const createPost = /* GraphQL */ `mutation CreatePost(
     username
     coverImage
     comments {
+      items {
+        id
+        message
+        post {
+          id
+          title
+          content
+          username
+          coverImage
+          createdAt
+          updatedAt
+          __typename
+        }
+        postID
+        createdAt
+        updatedAt
+        createdBy
+        __typename
+      }
       nextToken
       __typename
     }
@@ -42,6 +61,25 @@ export const updatePost = /* GraphQL */ `mutation UpdatePost(
     username
     coverImage
     comments {
+      items {
+        id
+        message
+        post {
+          id
+          title
+          content
+          username
+          coverImage
+          createdAt
+          updatedAt
+          __typename
+        }
+        postID
+        createdAt
+        updatedAt
+        createdBy
+        __typename
+      }
       nextToken
       __typename
     }
@@ -65,6 +103,25 @@ export const deletePost = /* GraphQL */ `mutation DeletePost(
     username
     coverImage
     comments {
+      items {
+        id
+        message
+        post {
+          id
+          title
+          content
+          username
+          coverImage
+          createdAt
+          updatedAt
+          __typename
+        }
+        postID
+        createdAt
+        updatedAt
+        createdBy
+        __typename
+      }
       nextToken
       __typename
     }
@@ -90,6 +147,19 @@ export const createComment = /* GraphQL */ `mutation CreateComment(
       content
       username
       coverImage
+      comments {
+        items {
+          id
+          message
+          postID
+          createdAt
+          updatedAt
+          createdBy
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -118,6 +188,19 @@ export const updateComment = /* GraphQL */ `mutation UpdateComment(
       content
       username
       coverImage
+      comments {
+        items {
+          id
+          message
+          postID
+          createdAt
+          updatedAt
+          createdBy
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -146,6 +229,19 @@ export const deleteComment = /* GraphQL */ `mutation DeleteComment(
       content
       username
       coverImage
+      comments {
+        items {
+          id
+          message
+          postID
+          createdAt
+          updatedAt
+          createdBy
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename

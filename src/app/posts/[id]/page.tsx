@@ -11,6 +11,8 @@ import { getUrl } from "aws-amplify/storage/server";
 import { runWithAmplifyServerContext } from "@/utils/amplifyServerUtils";
 import { cookies } from "next/headers";
 import Image from "next/image";
+import { createComment } from "@/graphql/mutations";
+import { Comments } from "@/components/posts/comments/pages";
 
 type Props = {
   params: {
@@ -71,6 +73,7 @@ export default async function Post({ params }: Props) {
         <ReactMarkdown>{post.content}</ReactMarkdown>
         {/* <ReactMarkdown className="prose" children={post.content} /> */}
       </div>
+      <Comments post={post} />
     </div>
   );
 }

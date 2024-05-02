@@ -16,6 +16,25 @@ export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
     username
     coverImage
     comments {
+      items {
+        id
+        message
+        post {
+          id
+          title
+          content
+          username
+          coverImage
+          createdAt
+          updatedAt
+          __typename
+        }
+        postID
+        createdAt
+        updatedAt
+        createdBy
+        __typename
+      }
       nextToken
       __typename
     }
@@ -37,6 +56,19 @@ export const listPosts = /* GraphQL */ `query ListPosts(
       content
       username
       coverImage
+      comments {
+        items {
+          id
+          message
+          postID
+          createdAt
+          updatedAt
+          createdBy
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -66,6 +98,19 @@ export const postsByUsername = /* GraphQL */ `query PostsByUsername(
       content
       username
       coverImage
+      comments {
+        items {
+          id
+          message
+          postID
+          createdAt
+          updatedAt
+          createdBy
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -88,6 +133,19 @@ export const getComment = /* GraphQL */ `query GetComment($id: ID!) {
       content
       username
       coverImage
+      comments {
+        items {
+          id
+          message
+          postID
+          createdAt
+          updatedAt
+          createdBy
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -112,6 +170,20 @@ export const listComments = /* GraphQL */ `query ListComments(
     items {
       id
       message
+      post {
+        id
+        title
+        content
+        username
+        coverImage
+        comments {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       postID
       createdAt
       updatedAt
@@ -143,6 +215,20 @@ export const commentsByPostID = /* GraphQL */ `query CommentsByPostID(
     items {
       id
       message
+      post {
+        id
+        title
+        content
+        username
+        coverImage
+        comments {
+          nextToken
+          __typename
+        }
+        createdAt
+        updatedAt
+        __typename
+      }
       postID
       createdAt
       updatedAt

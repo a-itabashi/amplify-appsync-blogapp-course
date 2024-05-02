@@ -19,6 +19,25 @@ export const onCreatePost = /* GraphQL */ `subscription OnCreatePost(
     username
     coverImage
     comments {
+      items {
+        id
+        message
+        post {
+          id
+          title
+          content
+          username
+          coverImage
+          createdAt
+          updatedAt
+          __typename
+        }
+        postID
+        createdAt
+        updatedAt
+        createdBy
+        __typename
+      }
       nextToken
       __typename
     }
@@ -42,6 +61,25 @@ export const onUpdatePost = /* GraphQL */ `subscription OnUpdatePost(
     username
     coverImage
     comments {
+      items {
+        id
+        message
+        post {
+          id
+          title
+          content
+          username
+          coverImage
+          createdAt
+          updatedAt
+          __typename
+        }
+        postID
+        createdAt
+        updatedAt
+        createdBy
+        __typename
+      }
       nextToken
       __typename
     }
@@ -65,6 +103,25 @@ export const onDeletePost = /* GraphQL */ `subscription OnDeletePost(
     username
     coverImage
     comments {
+      items {
+        id
+        message
+        post {
+          id
+          title
+          content
+          username
+          coverImage
+          createdAt
+          updatedAt
+          __typename
+        }
+        postID
+        createdAt
+        updatedAt
+        createdBy
+        __typename
+      }
       nextToken
       __typename
     }
@@ -90,6 +147,19 @@ export const onCreateComment = /* GraphQL */ `subscription OnCreateComment(
       content
       username
       coverImage
+      comments {
+        items {
+          id
+          message
+          postID
+          createdAt
+          updatedAt
+          createdBy
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -118,6 +188,19 @@ export const onUpdateComment = /* GraphQL */ `subscription OnUpdateComment(
       content
       username
       coverImage
+      comments {
+        items {
+          id
+          message
+          postID
+          createdAt
+          updatedAt
+          createdBy
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
@@ -146,6 +229,19 @@ export const onDeleteComment = /* GraphQL */ `subscription OnDeleteComment(
       content
       username
       coverImage
+      comments {
+        items {
+          id
+          message
+          postID
+          createdAt
+          updatedAt
+          createdBy
+          __typename
+        }
+        nextToken
+        __typename
+      }
       createdAt
       updatedAt
       __typename
