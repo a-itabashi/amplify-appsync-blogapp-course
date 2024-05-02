@@ -7,7 +7,7 @@ export async function middleware(request: NextRequest) {
   if (request.nextUrl.pathname === "/") {
     return response;
   }
-  if (request.nextUrl.pathname.startsWith("/posts/:id*")) {
+  if (!!request.nextUrl.pathname.match(/^\/posts\/[a-zA-Z0-9_-]+$/)) {
     return response;
   }
   if (request.nextUrl.pathname.startsWith("/profile")) {
