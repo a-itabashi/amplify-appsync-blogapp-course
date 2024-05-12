@@ -70,6 +70,7 @@ const Comments = ({ post }: Props) => {
             <div>
               <p className="text-gray-500 mt-2">{comment?.message}</p>
               <p className="text-gray-200 mt-1">{comment?.createdBy}</p>
+              <p className="text-gray-500 mt-1">{comment?.createdAt}</p>
             </div>
           </div>
         ))}

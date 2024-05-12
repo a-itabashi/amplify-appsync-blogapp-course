@@ -15,7 +15,7 @@ export const getPost = /* GraphQL */ `query GetPost($id: ID!) {
     content
     username
     coverImage
-    comments {
+    comments(sortDirection: DESC) {
       items {
         id
         message
@@ -198,15 +198,18 @@ export const listComments = /* GraphQL */ `query ListComments(
   APITypes.ListCommentsQueryVariables,
   APITypes.ListCommentsQuery
 >;
-export const commentsByPostID = /* GraphQL */ `query CommentsByPostID(
+export const commentsByPostIDAndCreatedAt =
+  /* GraphQL */ `query CommentsByPostIDAndCreatedAt(
   $postID: ID!
+  $createdAt: ModelStringKeyConditionInput
   $sortDirection: ModelSortDirection
   $filter: ModelCommentFilterInput
   $limit: Int
   $nextToken: String
 ) {
-  commentsByPostID(
+  commentsByPostIDAndCreatedAt(
     postID: $postID
+    createdAt: $createdAt
     sortDirection: $sortDirection
     filter: $filter
     limit: $limit
@@ -240,6 +243,6 @@ export const commentsByPostID = /* GraphQL */ `query CommentsByPostID(
   }
 }
 ` as GeneratedQuery<
-  APITypes.CommentsByPostIDQueryVariables,
-  APITypes.CommentsByPostIDQuery
->;
+    APITypes.CommentsByPostIDAndCreatedAtQueryVariables,
+    APITypes.CommentsByPostIDAndCreatedAtQuery
+  >;

@@ -32,5 +32,6 @@ type Comment
   id: ID!
   message: String
   post: Post @belongsTo(fields: ["postID"])
-  postID: ID! @index(name: "byPost")
+  postID: ID! @index(name: "byPost", sortKeyFields: ["createdAt"])
+  createdAt: String!
 }

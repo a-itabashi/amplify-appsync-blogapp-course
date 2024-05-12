@@ -105,11 +105,13 @@ export type CreateCommentInput = {
   id?: string | null,
   message?: string | null,
   postID: string,
+  createdAt?: string | null,
 };
 
 export type ModelCommentConditionInput = {
   message?: ModelStringInput | null,
   postID?: ModelIDInput | null,
+  createdAt?: ModelStringInput | null,
   and?: Array< ModelCommentConditionInput | null > | null,
   or?: Array< ModelCommentConditionInput | null > | null,
   not?: ModelCommentConditionInput | null,
@@ -135,6 +137,7 @@ export type UpdateCommentInput = {
   id: string,
   message?: string | null,
   postID?: string | null,
+  createdAt?: string | null,
 };
 
 export type DeleteCommentInput = {
@@ -168,9 +171,20 @@ export type ModelCommentFilterInput = {
   id?: ModelIDInput | null,
   message?: ModelStringInput | null,
   postID?: ModelIDInput | null,
+  createdAt?: ModelStringInput | null,
   and?: Array< ModelCommentFilterInput | null > | null,
   or?: Array< ModelCommentFilterInput | null > | null,
   not?: ModelCommentFilterInput | null,
+};
+
+export type ModelStringKeyConditionInput = {
+  eq?: string | null,
+  le?: string | null,
+  lt?: string | null,
+  ge?: string | null,
+  gt?: string | null,
+  between?: Array< string | null > | null,
+  beginsWith?: string | null,
 };
 
 export type ModelSubscriptionPostFilterInput = {
@@ -216,6 +230,7 @@ export type ModelSubscriptionCommentFilterInput = {
   id?: ModelSubscriptionIDInput | null,
   message?: ModelSubscriptionStringInput | null,
   postID?: ModelSubscriptionIDInput | null,
+  createdAt?: ModelSubscriptionStringInput | null,
   and?: Array< ModelSubscriptionCommentFilterInput | null > | null,
   or?: Array< ModelSubscriptionCommentFilterInput | null > | null,
 };
@@ -652,16 +667,17 @@ export type ListCommentsQuery = {
   } | null,
 };
 
-export type CommentsByPostIDQueryVariables = {
+export type CommentsByPostIDAndCreatedAtQueryVariables = {
   postID: string,
+  createdAt?: ModelStringKeyConditionInput | null,
   sortDirection?: ModelSortDirection | null,
   filter?: ModelCommentFilterInput | null,
   limit?: number | null,
   nextToken?: string | null,
 };
 
-export type CommentsByPostIDQuery = {
-  commentsByPostID?:  {
+export type CommentsByPostIDAndCreatedAtQuery = {
+  commentsByPostIDAndCreatedAt?:  {
     __typename: "ModelCommentConnection",
     items:  Array< {
       __typename: "Comment",
