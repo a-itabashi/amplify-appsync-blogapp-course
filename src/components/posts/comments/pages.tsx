@@ -5,7 +5,7 @@ import {
 } from "@/graphql/mutations";
 import { generateClient } from "aws-amplify/api";
 import { useRouter } from "next/navigation";
-import { Key, useState } from "react";
+import { Key, useEffect, useState } from "react";
 import { useRecoilValue } from "recoil";
 import { authState } from "@/store/authState";
 import dynamic from "next/dynamic";
@@ -16,6 +16,8 @@ const SimpleMDE = dynamic(() => import("react-simplemde-editor"), {
   ssr: false,
 });
 import "easymde/dist/easymde.min.css";
+import { onCreateComment } from "@/graphql/subscriptions";
+import { Subscription } from "rxjs";
 
 type Props = {
   post: any;
@@ -29,6 +31,7 @@ const Comments = ({ post }: Props) => {
   const { message } = comment;
   const client = generateClient();
   const router = useRouter();
+  const [comments, setComments] = useState(post.comments.items);
 
   const handleToggle = () => {
     setShowMe(!showMe);
@@ -54,14 +57,34 @@ const Comments = ({ post }: Props) => {
       console.log(error);
     }
   };
-  console.log(post);
+
+  let subOncreate: Subscription;
+
+  // setCommentの修正が必要
+  function setUpSubscriptions() {
+    subOncreate = client.graphql({ query: onCreateComment }).subscribe({
+      next: (commentData) => {
+        console.log(commentData);
+        const newComment = commentData.data.onCreateComment.message;
+        setComments((prevComments: string[]) => [...prevComments, newComment]);
+      },
+    });
+  }
+
+  useEffect(() => {
+    setUpSubscriptions();
+    return () => {
+      subOncreate.unsubscribe();
+    };
+  }, []);
+
   return (
     <>
-      {post.comments?.items?.length > 0 &&
-        post.comments.items.map((comment: any, index: Key) => (
+      {comments.length > 0 &&
+        comments.map((comment: any, index: Key) => (
           <div
             key={index}
-            className="py-8 px-8 max-w-xl mx-auto bg-white rounded-xl
+            className="py-8 px-8 max-w-xl bg-white rounded-xl
                     shadow-lg space-y-2 sm:py-1 sm:flex
                     my-6
                     mx-12

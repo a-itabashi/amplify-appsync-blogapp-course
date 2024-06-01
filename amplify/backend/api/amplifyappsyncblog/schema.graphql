@@ -35,3 +35,9 @@ type Comment
   postID: ID! @index(name: "byPost", sortKeyFields: ["createdAt"])
   createdAt: String!
 }
+
+# 書いただけ
+type Subscription {
+  newOnCreatePost: Post @aws_subscription(mutations: ["createPost"])
+  # newOnUpdatePost: Post @aws_subscription(mutations: ["updatePost"])
+}

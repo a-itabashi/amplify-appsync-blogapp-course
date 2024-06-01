@@ -11,7 +11,7 @@ import Image from "next/image";
 import { runWithAmplifyServerContext } from "@/utils/amplifyServerUtils";
 import { cookies } from "next/headers";
 import { getUrl } from "aws-amplify/storage/server";
-import { DeleteButton } from "@/components/posts/buttons/DeleteButton";
+import { newOnCreatePost } from "@/graphql/subscriptions";
 
 export const revalidate = 60;
 export const dynamic = "force-dynamic";
@@ -73,6 +73,17 @@ export default async function Home() {
   // if (!posts) {
   //   return notFound();
   // }
+
+  // let subOnCreate;
+
+  // const setUpSubscriptions = () => {
+  //   subOnCreate = API.graphql(graphqlOperation(newOnCreatePost)).subscribe({
+  //     next: (postData) => {
+  //       console.log(postData.value);
+  //       setPost(postData);
+  //     },
+  //   });
+  // };
 
   return (
     <>
